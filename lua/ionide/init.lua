@@ -258,12 +258,12 @@ end
 function M.call(method, params, callback_key)
   local handler = function(err, result, ctx, config)
     if result ~= nil then
-      fn['fsharp#resolve_callback'](callback_key, {
+      pcall(fn['fsharp#resolve_callback'](callback_key, {
         result = result,
         err = err,
         client_id = ctx.client_id,
         bufnr = ctx.bufnr
-      })
+      }))
     end
   end
   lsp.buf_request(0, method, params, handler)
